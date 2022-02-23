@@ -1,12 +1,26 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { PostRouteDto } from './dto';
+
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  @Get('/user/:id')
+  getParamRoute(@Param('id') id: string): string {
+    console.log('id', id);
+    console.log('typeof id', typeof id);
+    return 'getParamRoute()';
+  }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('/user')
+  getQueryRoute(@Query('id') id: number): string {
+    console.log('id', id);
+    console.log('typeof id', typeof id);
+    return 'getQueryRoute()';
+  }
+
+  @Post('/user')
+  postRoute(@Body() dto: PostRouteDto) {
+    console.log('dto', dto);
+    return 'validation success!';
   }
 }
